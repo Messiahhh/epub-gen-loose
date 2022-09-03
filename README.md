@@ -1,4 +1,4 @@
-# epub-gen - a library to make EPUBs from HTML
+# Epub-gen-loose - a library to make EPUBs from HTML
 
 [![Join the chat at https://gitter.im/cyrilis/epub-gen](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/cyrilis/epub-gen?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
@@ -6,9 +6,19 @@ Generate EPUB books from HTML with simple API in Node.js.
 
 ------
 
-This epub library will generate temp html and download images in your DOMs, then generate the epub book you want.
+## This project is based on original epub-gen project. But the failure of the images download won't block the entire task
 
-It's very fast, except the time to download images from the web.
+``` js
+ requestAction.on('error', function(err) {
+      if (self.options.verbose) {
+        console.error('[Download Error]', 'Error while downloading', options.url, err);
+      }
+      fs.unlinkSync(filename);
+      return downloadImageDefer.resolve(err); // here, reject -> resolve
+});
+```
+
+
 
 
 ## Usage
